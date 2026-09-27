@@ -1,0 +1,34 @@
+[
+  {
+    "test_id": "P02-LOCAL-TESTS",
+    "environment": "Windows / Node 22.11.0 / worker Wrangler 4.141.0",
+    "commit": "5d4136dfd5a8c2d810a470552c7e7e6742d6cb34",
+    "executed_at": "2026-09-27T08:08:50+00:00",
+    "result": "PASS",
+    "summary": "Seven Node tests, node --check, npm audit with zero vulnerabilities, and Wrangler deploy --dry-run passed locally. Dry-run had no bindings and did not deploy."
+  },
+  {
+    "test_id": "P02-PRIVATE-REPOS",
+    "environment": "GitHub / LiamLam617",
+    "commit": "c9295174b3971f93d4b41046a5994243ae15af5c",
+    "executed_at": "2026-09-27T09:58:21+00:00",
+    "result": "PASS",
+    "summary": "jarvis-deploy and jarvis-wiki were created under the approved owner and read back as Private with default branch main."
+  },
+  {
+    "test_id": "P02-DEPLOY-READBACK",
+    "environment": "GitHub / LiamLam617/jarvis-deploy main",
+    "commit": "c9295174b3971f93d4b41046a5994243ae15af5c",
+    "executed_at": "2026-09-27T09:58:21+00:00",
+    "result": "PASS",
+    "summary": "Remote main SHA matched local HEAD; worker/package.json was readable through GitHub API."
+  },
+  {
+    "test_id": "P02-WIKI-READBACK",
+    "environment": "GitHub / LiamLam617/jarvis-wiki main",
+    "commit": "47a92d101470d197fa1fea06ac2a1a905d71bae7",
+    "executed_at": "2026-09-27T09:58:21+00:00",
+    "result": "PASS",
+    "summary": "Remote main SHA matched local HEAD; wiki/SCHEMA.md was readable through GitHub API."
+  }
+]

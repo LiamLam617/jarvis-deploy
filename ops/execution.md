@@ -5,8 +5,8 @@ Discord + Hermes + Markdown Wiki；原目標為有條件 Strict-$0 MVP。2026-09
 
 ## Current State
 - Current phase: P02
-- Status: IN_PROGRESS；僅 P02 GitHub Private Repo 建立與推送獲准
-- Last verified at: 2026-09-27T09:56:22+00:00
+- Status: PASSED；P02 GitHub Private Repo 建立、推送與讀回驗證完成
+- Last verified at: 2026-09-27T09:58:21+00:00
 - Working branch / commit: 本機 `main`，無 remote；commit 以 `git rev-parse HEAD` 讀回。
 
 ## Phase Gates
@@ -14,7 +14,7 @@ Discord + Hermes + Markdown Wiki；原目標為有條件 Strict-$0 MVP。2026-09
 |---|---|---|---|
 | P00 | PASSED | evidence/p00-p01.json；未知項目已明列 | 完成可取得盤點，不代表 A01 全部通過 |
 | P01 | PASSED | evidence/p00-p01.json；Modal 費用風險經使用者明確接受，原 Strict-$0 A02 未通過 | 原費用條件已按使用者後續指示變更 |
-| P02 | IN_PROGRESS | 本機 deploy `5d4136d`、wiki `47a92d1`；待遠端讀回 | 已批准兩個 GitHub Private Repo |
+| P02 | PASSED | evidence/p02.json；兩個 Private Repo 的 main 與本機 commit 一致；本機測試及 dry-run 通過 | — |
 | P03 | NOT_STARTED | — | P02 |
 | P04 | NOT_STARTED | — | P03 |
 | P05 | NOT_STARTED | — | P04 |
@@ -61,10 +61,10 @@ Discord + Hermes + Markdown Wiki；原目標為有條件 Strict-$0 MVP。2026-09
 無本次新增遠端寫入或未同步 Agent 工作；現有雲端資料未改動。勿刪除既有資源或重設 Token。
 
 ## Human Action Required
-需確認 GitHub owner `LiamLam617`，並批准在該 owner 下建立兩個 Private Repo：`jarvis-deploy`、`jarvis-wiki`；隨後推送本機部署骨架及 Wiki 初始 Markdown。這項批准不包括 Cloudflare、Discord、Modal 的遠端寫入或正式接入。
+P02 無。P03 的 Discord 登入、憑證保存與遠端寫入批准，待只讀盤點後提出最小必要動作。
 
 ## Next Concrete Action
-取得上述 P02 階段批准後，先再次讀取兩個 Repo 是否存在，再只建立缺少的 Private Repo、推送已審查內容，讀回隱私設定及 commit；未獲批准則保留本機準備。
+進入 P03 只讀盤點：找既有 Discord Application、Guild 與 `#jarvis`／`#inbox` 身份，確認目前 Worker URL／Endpoint 與 Bot 憑證保存位置；列出 candidate Worker 與指令註冊的最小遠端差異，取得本階段批准後才寫入。
 
 ## P01 最新續接 — 2026-09-27T07:31:47.221556+00:00
 - 使用者已登入 Modal；瀏覽器讀回 Workspace liamlam617、Starter、2026-09-01 至 2026-10-01 週期、每月 30 美元 compute credits、總支出 0、usage limit 20、spend limit 20。
@@ -115,3 +115,10 @@ Discord + Hermes + Markdown Wiki；原目標為有條件 Strict-$0 MVP。2026-09
 - `.venv`、`worker/node_modules`、`.wrangler`、`.agents`、`wiki-seed` 均經 `git check-ignore` 確認不會加入部署 Repo。已掃描常見憑證格式，沒有命中；掃描不代替遠端 Secret 管理。
 - 已建立兩份本機提交：部署骨架 `5d4136dfd5a8c2d810a470552c7e7e6742d6cb34`；獨立 `wiki-seed/` 提交 `47a92d101470d197fa1fea06ac2a1a905d71bae7`。兩份本機 Repo 目前均沒有 remote。
 - 已按操作指南 §4.1 向使用者提出限於 GitHub `LiamLam617` 兩個 Private Repo 的 P02 建立／推送批准；在收到回答前不執行遠端寫入。
+
+## P02 遠端驗收 — 2026-09-27T09:58:21+00:00
+
+- 使用者已批准後，重新查詢 `LiamLam617` 下兩個目標 Repo，均未列出；隨後建立 `LiamLam617/jarvis-deploy`、`LiamLam617/jarvis-wiki` 為 Private。兩者在首次推送前已分別讀回 `isPrivate: true`。
+- 本機部署 Repo 加入 P02 批准紀錄提交 `c9295174b3971f93d4b41046a5994243ae15af5c`，推送到 `jarvis-deploy/main`；Wiki 種子庫提交 `47a92d101470d197fa1fea06ac2a1a905d71bae7` 推送到 `jarvis-wiki/main`。
+- GitHub API 再讀回兩者均為 Private、`default_branch: main`；遠端 commit 分別與本機一致。已讀到部署 Repo 的 `worker/package.json` 與 Wiki Repo 的 `wiki/SCHEMA.md`。無強制推送、無公開 Repository、無 Cloudflare／Discord／Modal 寫入。
+- P02 本機驗證為 7 項 Node 測試、語法檢查、Wrangler dry-run 及已核對的 `.gitignore`／lockfile；詳見 `ops/evidence/p02.json`。這不代表 P03 真實 Discord 驗收。
