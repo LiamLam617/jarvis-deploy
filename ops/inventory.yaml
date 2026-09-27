@@ -1,0 +1,169 @@
+schema_version: 1
+mode: modal_cost_risk_accepted_mvp
+current_phase: P01
+phase_status: BLOCKED_APPROVAL
+last_verified_at: "2026-09-27T08:10:56+00:00"
+
+authorization:
+  implementation_requested_at: "2026-09-27T07:29:35.758655+00:00"
+  remote_change_scope: null
+  approved_by: null
+  approved_at: null
+  production_cutover_approved_at: null
+  modal_cost_risk_accepted_at: "2026-09-27T08:01:57+00:00"
+
+discord:
+  server_name: "Liam 的伺服器"
+  bot_name: "Jarvis"
+  allowed_user_id: "249763790709719040"
+  application_id: null
+  public_key: null
+  guild_id: null
+  channel_ids:
+    jarvis: null
+    inbox: null
+  interactions_endpoint: null
+  commands_verified_at: null
+
+github:
+  owner: null
+  deploy_repo_name: jarvis-deploy
+  wiki_repo_name: jarvis-wiki
+  deploy_repo_full_name: null
+  wiki_repo_full_name: null
+  privacy_verified_at: null
+  wiki_branch: main
+  deployed_commit: null
+
+cloudflare:
+  account_id: "5ec21083745c46f56581948fe5767c64"
+  desired_plan: Free
+  observed_plan: Workers Free
+  worker_name: jarvis-ingress
+  worker_url: null
+  queue_name: jarvis-jobs
+  queue_id: "8c868ae58295403287b3a1fcf3de59f2"
+  dead_letter_queue_name: jarvis-dead-letter
+  dead_letter_queue_id: "93c4b566e0ad40be964f1e5db8cbf805"
+  d1_name: jarvis-control
+  d1_id: "de6dbcab-cc2b-4d71-9fa1-f6971cdb9df6"
+  bindings_verified_at: null
+
+modal:
+  workspace: liamlam617
+  environment: main
+  proposed_app_name: jarvis-runtime
+  actual_app_name: null
+  app_id: null
+  function_url: null
+  volume_name: jarvis-data
+  volume_version: null
+  volume_mount: /data
+  proposed_runtime_secret_name: jarvis-runtime-secrets
+  actual_runtime_secret_name: null
+  desired_runner_min_containers: 0
+  desired_runner_max_containers: 1
+  desired_concurrent_agent_jobs: 1
+  desired_runner_timeout_seconds: 300
+  desired_gpu: false
+  observed_runtime_config: null
+
+billing_gate:
+  status: USER_ACCEPTED_MODAL_COST_RISK_NOT_ZERO_VERIFIED
+  modal_observed_plan: Starter
+  modal_billing_cycle: "2026-09-01 / 2026-10-01"
+  modal_applicable_credits_usd: 30
+  modal_remaining_applicable_credits_usd: null
+  modal_desired_usage_budget_usd: 20
+  modal_observed_usage_budget_usd: 20
+  modal_desired_net_spend_limit_usd: 0
+  modal_observed_net_spend_limit_usd: 20
+  modal_saved_and_reopened_at: null
+  cloudflare_free_verified_at: "2026-09-27T08:08:50+00:00"
+  scope_and_exclusions_checked: "Rechecked 2026-09-27: Dashboard explicitly says Volume storage charges still accrue after workloads stop; zero-cost coverage unverified"
+  evidence_path: ops/evidence/p00-p01.json
+
+hermes:
+  version_or_commit: null
+  home: /data/hermes
+  wiki_path: /data/jarvis-wiki/wiki
+  desired_provider: custom
+  candidate_model: "@cf/qwen/qwen3-30b-a3b-fp8"
+  actual_provider: null
+  actual_model: null
+  actual_base_url: null
+  desired_max_turns: 6
+  desired_api_max_retries: 1
+  desired_auto_recovery_cycles: 0
+  paid_fallback_allowed: false
+  compatibility_verified_at: null
+
+bridge:
+  payload_schema_version: null
+  session_mapping_design: null
+  reply_credential_storage_design: null
+  job_claim_and_retry_design: null
+  terminal_state_report_design: null
+  reconciliation_procedure: null
+
+# Only references to approved storage locations; never token values.
+secret_references:
+  deploy_credentials: null
+  discord_bot_token: null
+  workers_ai_token: null
+  jarvis_internal_secret: null
+  wiki_write_credential: null
+
+tool_versions:
+  codex: "0.158.0-alpha.2.1"
+  git: "2.53.0.windows.1"
+  gh: "2.101.0"
+  node: "22.11.0"
+  wrangler: "4.141.0 (worker/package-lock.json pinned; global read-only inventory)"
+  python: "3.12.6"
+  modal: "1.5.5 (project .venv)"
+  playwright_mcp: null
+
+schedule:
+  enabled: false
+  approved_at: null
+  timezone: null
+  local_schedule: null
+  cron_utc: null
+  target_channel_id: null
+
+recovery:
+  last_state_backup_reference: null
+  last_wiki_commit: null
+  rollback_deployment_reference: null
+  restore_tested_at: null
+
+observations:
+  github_authenticated_login: LiamLam617
+  github_owner_pending_approval: LiamLam617
+  github_repository_queries: NOT_LISTED_IN_LIAMLAM617_OWNED_REPOSITORIES
+  worker_version_id: "451b02d7-b87c-43da-b71a-e0da224e42ef"
+  queue_producers: 0
+  queue_consumers: 0
+  d1_num_tables: 0
+  git_state: LOCAL_MAIN_NO_REMOTE
+  modal_auth: VERIFIED_CLI_LIAMLAM617
+  browser: "Codex IAB available; Modal login requires human completion; standalone Playwright MCP absent"
+
+
+  modal_browser_login: VERIFIED
+  modal_spend_limit_change_approval: DECLINED_FOR_NOW
+  modal_cli_setup: "First attempt failed: Could not connect to the Modal server; second diagnostic/auth attempt cancelled after no response; no active login process"
+  modal_billing_rechecked_at: "2026-09-27T07:48:07+00:00"
+  modal_cli_recheck: "token info produced no result after 15 seconds and was interrupted; CLI identity remains unverified"
+  modal_setup_completed_at: "2026-09-27T07:57:37+00:00"
+  modal_existing_apps: 0
+  modal_existing_volumes: 0
+  modal_existing_secrets: 0
+  modal_cli_proxy_support: "modal[api-proxy-support]==1.5.5; python-socks==3.1.1; aiohttp_socks==0.12.0"
+  cloudflare_dashboard_auth: VERIFIED_IN_IAB
+  cloudflare_dashboard_plan: "Workers Free active; verified on account subscriptions page"
+  cloudflare_ai_catalog: "@cf/qwen/qwen3-30b-a3b-fp8 listed; inference not tested"
+  p02_local_checks: "7 Node tests PASS; node --check PASS; Wrangler dry-run PASS"
+  billing_setting_user_instruction: "Skip Modal billing setting change; this does not verify strict-zero spend or authorize deployment"
+  modal_cost_risk_user_decision: "Accepted current Modal spend limit USD 20 and possible Volume storage charges; continue deployment preparation"

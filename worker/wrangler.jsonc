@@ -1,0 +1,8 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "jarvis-ingress",
+  "main": "src/index.mjs",
+  "compatibility_date": "2026-09-21",
+  "account_id": "5ec21083745c46f56581948fe5767c64",
+  "workers_dev": true
+}

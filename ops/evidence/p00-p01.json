@@ -1,0 +1,138 @@
+[
+  {
+    "test_id": "P00-LOCAL",
+    "environment": "local Windows / authenticated read-only APIs / IAB",
+    "commit": null,
+    "executed_at": "2026-09-27T07:29:35.758655+00:00",
+    "result": "PASS",
+    "summary": "Windows PowerShell; .git exists but empty; git status fails. Inventory/execution/program files absent at start."
+  },
+  {
+    "test_id": "P00-GITHUB",
+    "environment": "local Windows / authenticated read-only APIs / IAB",
+    "commit": null,
+    "executed_at": "2026-09-27T07:29:35.758655+00:00",
+    "result": "PASS",
+    "summary": "gh authenticated as LiamLam617; exact jarvis-deploy and jarvis-wiki queries cannot resolve. No assumption of absence or approved owner."
+  },
+  {
+    "test_id": "P00-CLOUDFLARE",
+    "environment": "local Windows / authenticated read-only APIs / IAB",
+    "commit": null,
+    "executed_at": "2026-09-27T07:29:35.758655+00:00",
+    "result": "PASS",
+    "summary": "OAuth whoami succeeded; existing Worker version, queues and D1 IDs saved in inventory. Queues have zero producers/consumers; D1 reports zero tables. Plan not verified."
+  },
+  {
+    "test_id": "P01-MODAL-INSTALL",
+    "environment": "local Windows / authenticated read-only APIs / IAB",
+    "commit": null,
+    "executed_at": "2026-09-27T07:29:35.758655+00:00",
+    "result": "PASS",
+    "summary": "Installed modal==1.5.5 inside .venv using Python 3.12.6; direct requirements and pip freeze saved."
+  },
+  {
+    "test_id": "P01-MODAL-AUTH",
+    "environment": "local Windows / authenticated read-only APIs / IAB",
+    "commit": null,
+    "executed_at": "2026-09-27T07:29:35.758655+00:00",
+    "result": "FAIL",
+    "summary": "modal token info: Token missing. No default .modal.toml. No remote Modal workload executed."
+  },
+  {
+    "test_id": "A01",
+    "environment": "local Windows / authenticated read-only APIs / IAB",
+    "commit": null,
+    "executed_at": "2026-09-27T07:29:35.758655+00:00",
+    "result": "NOT_RUN",
+    "summary": "Full identity verification incomplete: Discord and Modal unknown; GitHub owner not approved."
+  },
+  {
+    "test_id": "A02",
+    "environment": "local Windows / authenticated read-only APIs / IAB",
+    "commit": null,
+    "executed_at": "2026-09-27T07:29:35.758655+00:00",
+    "result": "NOT_RUN",
+    "summary": "Modal credits, cycle, saved $0 spend limit and Cloudflare Free plan not verified."
+  },
+  {
+    "test_id": "P00-BROWSER",
+    "environment": "local Windows / authenticated read-only APIs / IAB",
+    "commit": null,
+    "executed_at": "2026-09-27T07:29:35.758655+00:00",
+    "result": "PASS",
+    "summary": "IAB connected; settings redirected to Modal login. Later user-facing GitHub sign-in for Modal requires human completion. No secret read or retained."
+  },
+  {
+    "test_id": "P01-BILLING-LIVE",
+    "environment": "Modal authenticated Dashboard liamlam617",
+    "commit": null,
+    "executed_at": "2026-09-27T07:31:47.221556+00:00",
+    "result": "FAIL",
+    "summary": "Starter; cycle Sep 1-Oct 1 2026; monthly compute credits 30 USD; usage limit 20 USD; spend limit 20 USD. Volume storage explicitly continues accruing. User declined change to 0 for now. No billing mutation."
+  },
+  {
+    "test_id": "P01-BILLING-RECHECK",
+    "environment": "Authenticated Modal Dashboard / workspace liamlam617",
+    "commit": null,
+    "executed_at": "2026-09-27T07:48:07+00:00",
+    "result": "FAIL",
+    "summary": "Read-only revisit: Starter, Sep 1-Oct 1 2026 cycle, 30 USD monthly compute credits, 0 USD total spend, 20 USD usage limit, 20 USD spend limit. Dashboard states Volume storage charges continue after workloads stop. Strict-zero gate remains unmet."
+  },
+  {
+    "test_id": "P01-MODAL-CLI-RECHECK",
+    "environment": "Local Windows / project .venv Modal 1.5.5",
+    "commit": null,
+    "executed_at": "2026-09-27T07:48:07+00:00",
+    "result": "FAIL",
+    "summary": "modal token info returned no result after about 15 seconds and was interrupted. CLI identity remains unverified; no remote workload was executed."
+  },
+  {
+    "test_id": "P01-MODAL-SETUP",
+    "environment": "Local Windows / project .venv Modal 1.5.5",
+    "commit": null,
+    "executed_at": "2026-09-27T07:57:37+00:00",
+    "result": "PASS",
+    "summary": "After adding the Modal api-proxy-support extra, modal setup completed; CLI verified its token for workspace liamlam617. One-time authorization URL and token were not retained."
+  },
+  {
+    "test_id": "P01-MODAL-RESOURCE-INVENTORY",
+    "environment": "Authenticated Modal CLI / workspace liamlam617 / environment main",
+    "commit": null,
+    "executed_at": "2026-09-27T07:57:37+00:00",
+    "result": "PASS",
+    "summary": "CLI token identity verified. App, Volume, and Secret listings returned no resources in the active environment."
+  },
+  {
+    "test_id": "A02",
+    "environment": "Modal Dashboard and Cloudflare",
+    "commit": null,
+    "executed_at": "2026-09-27T07:57:37+00:00",
+    "result": "NOT_RUN",
+    "summary": "User requested skipping Modal billing setting. Existing spend limit remains 20 USD, volume charges may accrue, and Cloudflare Free plan is not verified; strict-zero acceptance remains unproven."
+  },
+  {
+    "test_id": "P01-CLOUDFLARE-PLAN",
+    "environment": "Authenticated Cloudflare Dashboard / account 5ec21083745c46f56581948fe5767c64",
+    "commit": null,
+    "executed_at": "2026-09-27T08:08:50+00:00",
+    "result": "PASS",
+    "summary": "Account subscriptions page shows Workers Free active. Existing Worker, two Queues, and D1 were read back; Qwen candidate appears in Wrangler AI model catalog. Live model inference is untested. No payment details were retained."
+  },
+  {
+    "test_id": "P02-LOCAL-PREP",
+    "environment": "Local Windows / Node 22.11.0 / Wrangler 4.141.0 pinned in worker package-lock",
+    "commit": null,
+    "executed_at": "2026-09-27T08:10:56+00:00",
+    "result": "PASS",
+    "summary": "Seven Node tests passed, node --check passed, Wrangler deploy --dry-run passed with no bindings; npm reported zero vulnerabilities. Worker remains undeployed. Separate wiki seed exists locally."
+  },
+  {
+    "test_id": "P02-GITHUB-OWNER-INVENTORY",
+    "environment": "Authenticated GitHub CLI / LiamLam617",
+    "commit": null,
+    "executed_at": "2026-09-27T08:10:56+00:00",
+    "result": "PASS",
+    "summary": "Authenticated account can list four owner repositories; jarvis-deploy and jarvis-wiki are not listed. No repository was created."
+  }
+]
