@@ -4,9 +4,9 @@
 Discord + Hermes + Markdown Wiki；原目標為有條件 Strict-$0 MVP。2026-09-27 使用者明確接受目前 Modal 費用風險，要求繼續準備部署；其他範圍與階段批准仍依操作指南。
 
 ## Current State
-- Current phase: P02
-- Status: PASSED；P02 GitHub Private Repo 建立、推送與讀回驗證完成
-- Last verified at: 2026-09-27T09:58:21+00:00
+- Current phase: P03
+- Status: BLOCKED_AUTH；Discord Developer Portal 登入驗證待使用者完成
+- Last verified at: 2026-09-27T10:02:35+00:00
 - Working branch / commit: 本機 `main`，無 remote；commit 以 `git rev-parse HEAD` 讀回。
 
 ## Phase Gates
@@ -15,7 +15,7 @@ Discord + Hermes + Markdown Wiki；原目標為有條件 Strict-$0 MVP。2026-09
 | P00 | PASSED | evidence/p00-p01.json；未知項目已明列 | 完成可取得盤點，不代表 A01 全部通過 |
 | P01 | PASSED | evidence/p00-p01.json；Modal 費用風險經使用者明確接受，原 Strict-$0 A02 未通過 | 原費用條件已按使用者後續指示變更 |
 | P02 | PASSED | evidence/p02.json；兩個 Private Repo 的 main 與本機 commit 一致；本機測試及 dry-run 通過 | — |
-| P03 | NOT_STARTED | — | P02 |
+| P03 | BLOCKED_AUTH | evidence/p03.json；本機命令規劃測試通過，Discord 及 Worker 真實互動未執行 | Discord 登入／hCaptcha，之後需本階段遠端批准 |
 | P04 | NOT_STARTED | — | P03 |
 | P05 | NOT_STARTED | — | P04 |
 | P06 | NOT_STARTED | — | P05 |
@@ -61,10 +61,10 @@ Discord + Hermes + Markdown Wiki；原目標為有條件 Strict-$0 MVP。2026-09
 無本次新增遠端寫入或未同步 Agent 工作；現有雲端資料未改動。勿刪除既有資源或重設 Token。
 
 ## Human Action Required
-P02 無。P03 的 Discord 登入、憑證保存與遠端寫入批准，待只讀盤點後提出最小必要動作。
+P02 無。P03 的 Discord Developer Portal 登入目前停在 hCaptcha；請使用者本人完成。Codex 其後只讀查找 Application／Public Key、Guild 與頻道，再提出憑證保存與遠端寫入的具體批准範圍。
 
 ## Next Concrete Action
-進入 P03 只讀盤點：找既有 Discord Application、Guild 與 `#jarvis`／`#inbox` 身份，確認目前 Worker URL／Endpoint 與 Bot 憑證保存位置；列出 candidate Worker 與指令註冊的最小遠端差異，取得本階段批准後才寫入。
+Discord 登入驗證完成後，讀取既有 Application／Public Key、Guild 與頻道身份，檢查目前 Endpoint 與 Bot 憑證保存位置；列出 candidate Worker 與三項 Guild Commands 的最小遠端差異，取得 P03 批准後才寫入。
 
 ## P01 最新續接 — 2026-09-27T07:31:47.221556+00:00
 - 使用者已登入 Modal；瀏覽器讀回 Workspace liamlam617、Starter、2026-09-01 至 2026-10-01 週期、每月 30 美元 compute credits、總支出 0、usage limit 20、spend limit 20。
@@ -122,3 +122,10 @@ P02 無。P03 的 Discord 登入、憑證保存與遠端寫入批准，待只讀
 - 本機部署 Repo 加入 P02 批准紀錄提交 `c9295174b3971f93d4b41046a5994243ae15af5c`，推送到 `jarvis-deploy/main`；Wiki 種子庫提交 `47a92d101470d197fa1fea06ac2a1a905d71bae7` 推送到 `jarvis-wiki/main`。
 - GitHub API 再讀回兩者均為 Private、`default_branch: main`；遠端 commit 分別與本機一致。已讀到部署 Repo 的 `worker/package.json` 與 Wiki Repo 的 `wiki/SCHEMA.md`。無強制推送、無公開 Repository、無 Cloudflare／Discord／Modal 寫入。
 - P02 本機驗證為 7 項 Node 測試、語法檢查、Wrangler dry-run 及已核對的 `.gitignore`／lockfile；詳見 `ops/evidence/p02.json`。這不代表 P03 真實 Discord 驗收。
+- P02 結果紀錄再次推送後，`jarvis-deploy/main` 的最終遠端 commit 為 `e3c60c8e26b7e144f711077ab3d780071820e505`，仍為 Private 且與本機一致；Wiki Repo 維持 `47a92d1`。P02 遠端驗收通過。
+
+## P03 只讀與本機準備 — 2026-09-27T10:02:35+00:00
+
+- Discord Developer Portal 未登入；使用者正完成登入，頁面目前要求 hCaptcha。沒有操作驗證碼或取得 Bot Token，因此 Application、Guild、頻道 ID 尚未讀回。
+- Cloudflare 現有 `jarvis-ingress` 仍為 2026-09-21 從 Dashboard template 上傳的版本 `451b02d7-b87c-43da-b71a-e0da224e42ef`，100% 流量；實際 workers.dev URL 的 GET 回覆 `HTTP 200 Hello World!`。本機 candidate Worker 未部署，既有 Endpoint 未改動。
+- 本機新增 `scripts/register_discord_commands.mjs`，先讀 Guild Commands，比較名稱／型別／描述／options，預設僅列差異；只有明確 `--apply` 才建立或更新本案三個指令，最後讀回驗證，不批次覆蓋其他指令。三項規劃測試與語法檢查通過。未以真實 Bot Token 執行。

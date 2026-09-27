@@ -1,0 +1,26 @@
+[
+  {
+    "test_id": "P03-WORKER-READONLY",
+    "environment": "Cloudflare account 5ec21083745c46f56581948fe5767c64 / existing production Worker",
+    "commit": "e3c60c8e26b7e144f711077ab3d780071820e505",
+    "executed_at": "2026-09-27T10:02:35+00:00",
+    "result": "PASS",
+    "summary": "Existing dashboard-template version 451b02d7-b87c-43da-b71a-e0da224e42ef has 100% traffic. GET of workers.dev URL returned HTTP 200 Hello World! Candidate code has not been deployed."
+  },
+  {
+    "test_id": "P03-COMMAND-PLAN-LOCAL",
+    "environment": "Local Windows / Node 22.11.0",
+    "commit": null,
+    "executed_at": "2026-09-27T10:02:35+00:00",
+    "result": "PASS",
+    "summary": "Three tests passed for create, unchanged, and single-command update while preserving unrelated commands. Syntax checks passed. No Discord API write was performed."
+  },
+  {
+    "test_id": "P03-DISCORD-IDENTITY",
+    "environment": "Discord Developer Portal in authenticated browser workflow",
+    "commit": null,
+    "executed_at": "2026-09-27T10:02:35+00:00",
+    "result": "NOT_RUN",
+    "summary": "User login currently requires hCaptcha. Application, Guild, Channel, and Endpoint readback is pending."
+  }
+]
