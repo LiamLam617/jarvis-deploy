@@ -4,17 +4,17 @@
 Discord + Hermes + Markdown Wiki；原目標為有條件 Strict-$0 MVP。2026-09-27 使用者明確接受目前 Modal 費用風險，要求繼續準備部署；其他範圍與階段批准仍依操作指南。
 
 ## Current State
-- Current phase: P01
-- Status: BLOCKED_APPROVAL；Cloudflare Workers Free 已核對，P02 遠端寫入尚未批准
-- Last verified at: 2026-09-27T08:10:56+00:00
+- Current phase: P02
+- Status: IN_PROGRESS；僅 P02 GitHub Private Repo 建立與推送獲准
+- Last verified at: 2026-09-27T09:56:22+00:00
 - Working branch / commit: 本機 `main`，無 remote；commit 以 `git rev-parse HEAD` 讀回。
 
 ## Phase Gates
 | Phase | Status | Evidence | Blocking dependency |
 |---|---|---|---|
 | P00 | PASSED | evidence/p00-p01.json；未知項目已明列 | 完成可取得盤點，不代表 A01 全部通過 |
-| P01 | BLOCKED_APPROVAL | evidence/p00-p01.json | Modal 費用風險已由使用者接受；Cloudflare Workers Free 已讀回，P02 遠端寫入批准尚無 |
-| P02 | NOT_STARTED | — | P01 |
+| P01 | PASSED | evidence/p00-p01.json；Modal 費用風險經使用者明確接受，原 Strict-$0 A02 未通過 | 原費用條件已按使用者後續指示變更 |
+| P02 | IN_PROGRESS | 本機 deploy `5d4136d`、wiki `47a92d1`；待遠端讀回 | 已批准兩個 GitHub Private Repo |
 | P03 | NOT_STARTED | — | P02 |
 | P04 | NOT_STARTED | — | P03 |
 | P05 | NOT_STARTED | — | P04 |
@@ -26,6 +26,7 @@ Discord + Hermes + Markdown Wiki；原目標為有條件 Strict-$0 MVP。2026-09
 - 本次使用者明確要求依指南實施；已進行本機準備及遠端唯讀查詢。
 - 沒有遠端寫入、帳單修改或正式接入批准。GitHub 登入身份不自動等於已批准 owner。
 - 使用者於 2026-09-27 明確要求跳過 Modal 費用設定，隨後選擇「接受目前費用風險，繼續準備部署」。這只變更 Modal 費用前提；沒有授權建立遠端資源或正式接入。
+- 使用者於 2026-09-27 再明確回答「批准」，對應前一則精確請求：GitHub owner `LiamLam617`，建立 `jarvis-deploy`、`jarvis-wiki` 兩個 Private Repo，分別推送本機內容並讀回驗證。Cloudflare、Discord、Modal 寫入及正式接入均不在此批准範圍。
 
 ## Completed / Changed Files
 - 建立 ops/inventory.yaml、ops/execution.md、ops/evidence/p00-p01.json。
@@ -112,3 +113,5 @@ Discord + Hermes + Markdown Wiki；原目標為有條件 Strict-$0 MVP。2026-09
 - `gh repo list LiamLam617 --limit 1000` 可列出該 owner 的 4 個 Repository，沒有 `jarvis-deploy` 或 `jarvis-wiki`。此結論只適用於目前已登入的 `LiamLam617` 身份與可見範圍。
 - 本機部署骨架已備妥；`wiki-seed/` 另有 `wiki/SCHEMA.md`、`index.md`、`log.md`、`inbox/README.md` 及短入口，待獲批准後放入獨立的 Private `jarvis-wiki`。它已從部署 Repo 的 Git 提交範圍排除。
 - `.venv`、`worker/node_modules`、`.wrangler`、`.agents`、`wiki-seed` 均經 `git check-ignore` 確認不會加入部署 Repo。已掃描常見憑證格式，沒有命中；掃描不代替遠端 Secret 管理。
+- 已建立兩份本機提交：部署骨架 `5d4136dfd5a8c2d810a470552c7e7e6742d6cb34`；獨立 `wiki-seed/` 提交 `47a92d101470d197fa1fea06ac2a1a905d71bae7`。兩份本機 Repo 目前均沒有 remote。
+- 已按操作指南 §4.1 向使用者提出限於 GitHub `LiamLam617` 兩個 Private Repo 的 P02 建立／推送批准；在收到回答前不執行遠端寫入。

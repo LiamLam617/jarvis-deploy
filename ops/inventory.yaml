@@ -1,14 +1,14 @@
 schema_version: 1
 mode: modal_cost_risk_accepted_mvp
-current_phase: P01
-phase_status: BLOCKED_APPROVAL
-last_verified_at: "2026-09-27T08:10:56+00:00"
+current_phase: P02
+phase_status: IN_PROGRESS
+last_verified_at: "2026-09-27T09:56:22+00:00"
 
 authorization:
   implementation_requested_at: "2026-09-27T07:29:35.758655+00:00"
-  remote_change_scope: null
-  approved_by: null
-  approved_at: null
+  remote_change_scope: "P02 GitHub LiamLam617: create jarvis-deploy and jarvis-wiki as Private, push prepared local content, verify privacy and commits; no Cloudflare/Discord/Modal write"
+  approved_by: "user in chat"
+  approved_at: "2026-09-27T09:56:22+00:00"
   production_cutover_approved_at: null
   modal_cost_risk_accepted_at: "2026-09-27T08:01:57+00:00"
 
@@ -26,7 +26,7 @@ discord:
   commands_verified_at: null
 
 github:
-  owner: null
+  owner: LiamLam617
   deploy_repo_name: jarvis-deploy
   wiki_repo_name: jarvis-wiki
   deploy_repo_full_name: null
@@ -165,5 +165,7 @@ observations:
   cloudflare_dashboard_plan: "Workers Free active; verified on account subscriptions page"
   cloudflare_ai_catalog: "@cf/qwen/qwen3-30b-a3b-fp8 listed; inference not tested"
   p02_local_checks: "7 Node tests PASS; node --check PASS; Wrangler dry-run PASS"
+  local_deploy_baseline_commit: "5d4136dfd5a8c2d810a470552c7e7e6742d6cb34"
+  local_wiki_seed_commit: "47a92d101470d197fa1fea06ac2a1a905d71bae7"
   billing_setting_user_instruction: "Skip Modal billing setting change; this does not verify strict-zero spend or authorize deployment"
   modal_cost_risk_user_decision: "Accepted current Modal spend limit USD 20 and possible Volume storage charges; continue deployment preparation"
