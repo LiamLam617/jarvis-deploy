@@ -6,8 +6,8 @@ Discord + Hermes + Markdown Wiki；原目標為有條件 Strict-$0 MVP。2026-09
 ## Current State
 - Current phase: P04
 - Status: BLOCKED_APPROVAL；P03 已通過，P04 本機契約、程式與測試通過；遠端 Queue/D1/Modal 寫入及正式 Worker Queue consumer 部署尚未批准
-- Last verified at: 2026-09-30T22:10:00+08:00
-- Working branch / commit: 本機 `main`，HEAD `160491aaa9aa40d5f5016234fac26a7a4fc23a8f`；P03 變更尚未推送。
+- Last verified at: 2026-09-30T22:12:47+08:00
+- Working branch / commit: 本機 `main` 追蹤 `origin/main`；P03/P04 source snapshot `5e212cb90c520d76f2aa12a130c988abac592c06` 已推送並讀回一致。
 
 ## Phase Gates
 | Phase | Status | Evidence | Blocking dependency |
@@ -41,6 +41,8 @@ Discord + Hermes + Markdown Wiki；原目標為有條件 Strict-$0 MVP。2026-09
 - Discord Application、Guild、兩個私人頻道、Guild Commands 與已保存的 Preview Interactions Endpoint 見 Inventory。Modal Workspace `liamlam617`、Environment `main` 已核對；P04 App／Secret／Volume 均不存在。
 
 ## Latest Verified Results
+2026-09-30 22:12 Asia/Taipei 已推送 27 個 P03/P04 source、測試、證據及 ChatGPT Web handoff 檔案至私有 `LiamLam617/jarvis-deploy` 的 `main`。Commit `5e212cb90c520d76f2aa12a130c988abac592c06`；`git fetch` 後本機 HEAD 與 `origin/main` 一致，GitHub API 讀回相同 commit，並確認 handoff README 與 P04 evidence 路徑存在。無 force push；沒有 Cloudflare、Discord 或 Modal 資源寫入／部署。P04 仍 `BLOCKED_APPROVAL`。
+
 2026-09-30 22:10 Asia/Taipei 完成推送前檢查：Worker `npm test` 19/19、`npm run check`、`npm run dry-run`（未上傳）、Modal runtime `unittest` 3/3、`py_compile`、P04 evidence JSON parse、`git diff --check` 均通過；憑證格式掃描沒有命中。Python 測試第一次從 Repo 根目錄啟動時因工作目錄錯誤無法匯入 `bridge_protocol`；改於 `runtime/` 重跑後 3/3 通過。遠端 Repo `LiamLam617/jarvis-deploy` 已確認 Private；`origin/main` 是本機 `main` 的祖先，可快轉推送。以上檢查不代表 P04 遠端部署驗收通過。
 
 2026-09-30 21:39 Asia/Taipei 以只讀方式刷新 Cloudflare／Modal 資源盤點：Wrangler 4.141.0 登入指定 Account；`jarvis-jobs` 與 `jarvis-dead-letter` 各為 0 producers／0 consumers；`jarvis-control` 仍為 0 tables／12288 bytes；production `jarvis-ingress` 仍由版本 `451b02d7-b87c-43da-b71a-e0da224e42ef` 承接 100%。Modal CLI 1.5.5 讀回 Workspace `liamlam617`、Environment `main`，0 Apps／Secrets／Volumes。沒有遠端寫入。Queue backlog metrics 未在本次刷新，最新 metrics 仍為 2026-09-28 16:03 UTC 的 best-effort 0 messages／0 bytes；啟用 consumer 前必須即時重查。

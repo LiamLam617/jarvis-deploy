@@ -48,9 +48,9 @@
 
 ## 工作樹與遠端 Repo
 
-- 本機分支 `main`，HEAD `160491aaa9aa40d5f5016234fac26a7a4fc23a8f`。P03/P04 程式與紀錄目前有未提交變更；請先讀 `git status --short`，保留所有內容，不要 reset、clean 或覆寫。
-- 最近已知 GitHub `LiamLam617/jarvis-deploy/main` 遠端提交為 P02 最終版 `e3c60c8e26b7e144f711077ab3d780071820e505`；P03/P04 本機變更尚未推送。`jarvis-wiki` 遠端目前是種子內容，沒有 P06 同步。
-- 新 ChatGPT Web 若只能看到 GitHub Repo，便看不到 P03/P04 的本機實作；先確認是否能讀寫目前工作樹。不得為了方便自行推送或上傳私有原始資料。
+- 本機分支 `main` 已乾淨並追蹤 `origin/main`。P03/P04 程式、證據與 handoff 文件已推到 `LiamLam617/jarvis-deploy/main`；source snapshot commit `5e212cb90c520d76f2aa12a130c988abac592c06` 已由 GitHub API 與 `git fetch` 讀回一致。
+- ChatGPT Web 若有 `LiamLam617/jarvis-deploy` 私有 Repo 讀取權，現可讀到 P03/P04 source snapshot；仍須先確認實際權限與最新遠端 HEAD。若只有本交接 Markdown，無法執行完整測試或部署。
+- `jarvis-wiki` 遠端仍是種子內容，沒有 P06 同步。不得為了方便自行推送新的 Wiki 內容或其他分支。
 
 ## 使用者決定與認證邊界
 

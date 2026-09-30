@@ -2,8 +2,19 @@
   "schema_version": 1,
   "phase": "P04",
   "status": "BLOCKED_APPROVAL",
-  "verified_at": "2026-09-30T22:10:00+08:00",
-  "implementation_status": "LOCAL_PREPARATION_PASS_REMOTE_NOT_PERFORMED",
+  "verified_at": "2026-09-30T22:12:47+08:00",
+  "implementation_status": "LOCAL_PREPARATION_PASS_P04_RUNTIME_REMOTE_NOT_PERFORMED",
+  "remote_changes_scope": "remote_changes_performed tracks P04 Cloudflare, Discord and Modal resource changes/deployments; GitHub source publication is recorded separately below",
+  "source_repository_push": {
+    "repository": "LiamLam617/jarvis-deploy",
+    "branch": "main",
+    "commit": "5e212cb90c520d76f2aa12a130c988abac592c06",
+    "repository_visibility": "PRIVATE",
+    "pushed_at": "2026-09-30T22:12:47+08:00",
+    "readback": "PASS: git fetch showed HEAD equals origin/main; GitHub API read back the same main commit and confirmed handoff/chatgpt-web/README.md and ops/evidence/p04.json exist",
+    "scope": "P03/P04 source, tests, evidence, operations state, and ChatGPT Web handoff documents",
+    "cloud_resource_writes_or_deployments": "NONE"
+  },
   "pre_push_verification": {
     "verified_at": "2026-09-30T22:10:00+08:00",
     "worker_tests": "PASS: 19/19 with Node 22.11.0",

@@ -2,7 +2,7 @@ schema_version: 1
 mode: modal_cost_risk_accepted_mvp
 current_phase: P04
 phase_status: BLOCKED_APPROVAL
-last_verified_at: "2026-09-30T21:39:17+08:00"
+last_verified_at: "2026-09-30T22:12:47+08:00"
 
 authorization:
   implementation_requested_at: "2026-09-27T07:29:35.758655+00:00"
@@ -197,7 +197,7 @@ observations:
   p04_cloudflare_readback: "2026-09-30T21:39:17+08:00 Wrangler 4.141.0, authenticated Cloudflare account 5ec21083745c46f56581948fe5767c64: jarvis-jobs 8c868ae58295403287b3a1fcf3de59f2 and jarvis-dead-letter 93c4b566e0ad40be964f1e5db8cbf805 each have 0 producers/consumers; production Worker 451b02d7-b87c-43da-b71a-e0da224e42ef remains at 100%; P04 changes not deployed"
   p04_modal_readback: "2026-09-30T21:39:17+08:00 Modal CLI 1.5.5, workspace liamlam617, active environment main; 0 Apps, 0 Secrets, 0 Volumes; P04 resources not created"
   p04_local_verification: "19/19 Node tests PASS; Worker syntax check and Wrangler dry-run PASS; local-only D1 migration PASS with 1 table, 3 indexes and 0 rows; 3/3 Python tests and py_compile PASS; git diff --check PASS"
-  p04_remote_change_status: "NOT_PERFORMED; waiting for explicit P04 approval"
+  p04_remote_change_status: "P04 Cloudflare/Discord/Modal resource writes and deployments NOT_PERFORMED; private GitHub source push is recorded separately in ops/evidence/p04.json"
   p04_preview_constraint: "Cloudflare Preview can produce Queue messages but cannot consume; Preview D1/Queue bindings using existing IDs share remote data; production Worker deployment required for the Queue consumer"
   modal_cli_proxy_support: "modal[api-proxy-support]==1.5.5; python-socks==3.1.1; aiohttp_socks==0.12.0"
   cloudflare_dashboard_auth: VERIFIED_IN_IAB
@@ -209,6 +209,9 @@ observations:
   deploy_repo_initial_remote_commit: "c9295174b3971f93d4b41046a5994243ae15af5c"
   wiki_repo_remote_commit: "47a92d101470d197fa1fea06ac2a1a905d71bae7"
   deploy_repo_p02_final_remote_commit: "e3c60c8e26b7e144f711077ab3d780071820e505"
+  deploy_repo_last_source_push_commit: "5e212cb90c520d76f2aa12a130c988abac592c06"
+  deploy_repo_last_source_push_at: "2026-09-30T22:12:47+08:00"
+  deploy_repo_last_source_push_readback: "PASS: GitHub API and git fetch both read main at 5e212cb90c520d76f2aa12a130c988abac592c06; handoff README and P04 evidence paths exist"
   worker_live_get: "HTTP 200 Hello World! from existing dashboard template; candidate Worker not deployed"
   discord_developer_portal_auth: "VERIFIED_IN_IAB; Hermes application selected by user for Jarvis"
   discord_application_baseline: "Hermes installed in target Guild; Interactions Endpoint blank; Guild Install includes applications.commands and bot with broad default permissions; three privileged Gateway intents enabled; target Guild integration has no commands, @everyone and all channels allowed, and many granted Bot permissions"

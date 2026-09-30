@@ -9,7 +9,7 @@
 ## 交接前請提供
 
 1. 將本資料夾的五份 Markdown 提供給 ChatGPT Web。第一次貼上 [`03-CHATGPT-WEB-PROMPT.md`](03-CHATGPT-WEB-PROMPT.md)；需要分情境操作時，從 [`04-CHATGPT-WEB-PROMPTS.md`](04-CHATGPT-WEB-PROMPTS.md) 選用提示詞。
-2. 若希望它改程式並執行測試，還要讓它讀寫目前完整工作樹。P03/P04 變更目前只在本機未提交工作樹，尚未同步到 GitHub `jarvis-deploy/main`；單獨提供這些 Markdown 不含程式碼。
+2. 若希望它改程式並執行測試，需讓它讀取私有 GitHub `LiamLam617/jarvis-deploy` 或提供目前工作樹。P03/P04 程式、證據與交接文件已推送到 `main`，source snapshot commit 為 `5e212cb90c520d76f2aa12a130c988abac592c06`；若 ChatGPT Web 沒有該私有 Repo 的存取權，單獨提供 Markdown 仍不含完整程式碼。
 3. 告知 ChatGPT Web 可以使用 `computer-use` skill。它仍須先確認該工作階段實際提供此 skill、實際看到的視窗，以及能否讀寫目前專案；不得假設目前 Codex 的瀏覽器登入狀態或本機 CLI 認證會自動共享。
 
 ## 文件閱讀順序
