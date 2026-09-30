@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "phase": "P04",
+  "status": "BLOCKED_APPROVAL",
+  "verified_at": "2026-09-30T22:10:00+08:00",
+  "implementation_status": "LOCAL_PREPARATION_PASS_REMOTE_NOT_PERFORMED",
+  "pre_push_verification": {
+    "verified_at": "2026-09-30T22:10:00+08:00",
+    "worker_tests": "PASS: 19/19 with Node 22.11.0",
+    "worker_check": "PASS: npm run check",
+    "worker_dry_run": "PASS: npm run dry-run; no upload",
+    "runtime_tests": "PASS: 3/3 with project Python 3.12.6; first invocation from repository root failed because bridge_protocol import expects runtime as working directory, then rerun from runtime/ passed",
+    "runtime_compile": "PASS: py_compile runtime/modal_app.py runtime/bridge_protocol.py",
+    "p04_evidence_json": "PASS: parsed with Node JSON.parse",
+    "git_diff_check": "PASS",
+    "secret_pattern_scan": "PASS: no candidate files matched the checked credential patterns; ignored .venv/.wrangler/node_modules/wiki-seed excluded",
+    "remote_p04_changes": "NONE; no remote D1 migration, secret, Modal deployment, Worker upload or traffic change"
+  },
+  "local_preparation": {
+    "contract": {
+      "status": "PASS",
+      "path": "ops/p04-bridge-contract.md",
+      "notes": "Event/session keys, token retention, state transitions, Queue ACK, Modal dispatch, recovery and failure matrix documented before remote work."
+    },
+    "worker": {
+      "node": "22.11.0",
+      "wrangler": "4.141.0",
+      "tests": "PASS: 19/19",
+      "syntax_check": "PASS: npm run check",
+      "dry_run": "PASS: npm run dry-run; production bindings show existing jarvis-control D1 and jarvis-jobs Queue; no upload occurred",
+      "test_coverage": "SQLite-backed migration and D1 adapter; encrypted token; deferred acknowledgement before Queue completion; duplicate interaction; authorization rejection; D1 failure; uncertain Queue send and /status recovery including expired ENQUEUEING lease; transient Modal retry; internal HMAC/claim; Modal claim omits prompt/URL; callback delivery retry; expiry; production queue-only fetch response."
+    },
+    "local_d1": {
+      "status": "PASS",
+      "command": "wrangler d1 migrations apply jarvis-control --local --persist-to .wrangler/state/p04-local",
+      "migration": "0001_create_p04_job_ledger.sql applied to isolated local state only",
+      "readback": "jarvis_jobs table plus three indexes present; 0 job rows",
+      "remote_migration": "NOT_RUN"
+    },
+    "modal_runtime": {
+      "sdk": "1.5.5",
+      "python_tests": "PASS: 3/3",
+      "py_compile": "PASS: modal_app.py and bridge_protocol.py",
+      "image_dependency": "fastapi==0.141.1 pinned in Modal image; FastAPI is not installed in the local venv, so app import/deploy was not tested locally",
+      "deployment": "NOT_RUN"
+    },
+    "repository_checks": {
+      "git_diff_check": "PASS",
+      "json_and_jsonc_parse": "PASS",
+      "inventory_yaml_parser": "NOT_RUN: PyYAML, js-yaml, yaml, PowerShell ConvertFrom-Yaml and yq are unavailable in the workspace; changed YAML values were reviewed manually"
+    }
+  },
+  "live_resource_readback": {
+    "inventory_readback_at": "2026-09-30T21:39:17+08:00",
+    "cloudflare_account_id": "5ec21083745c46f56581948fe5767c64",
+    "worker": {
+      "name": "jarvis-ingress",
+      "production_version_id": "451b02d7-b87c-43da-b71a-e0da224e42ef",
+      "production_traffic_percent": 100,
+      "p03_interactions_endpoint": "https://p03-jarvis-ingress.liamlamspace.workers.dev",
+      "p04_binding_or_deployment": "NOT_PERFORMED"
+    },
+    "queues": {
+      "jobs": {
+        "name": "jarvis-jobs",
+        "id": "8c868ae58295403287b3a1fcf3de59f2",
+        "producers": 0,
+        "consumers": 0,
+        "backlog_count": 0,
+        "backlog_bytes": 0,
+        "metrics_read_at": "2026-09-28T16:03:08+00:00"
+      },
+      "dead_letter": {
+        "name": "jarvis-dead-letter",
+        "id": "93c4b566e0ad40be964f1e5db8cbf805",
+        "producers": 0,
+        "consumers": 0,
+        "backlog_count": 0,
+        "backlog_bytes": 0,
+        "metrics_read_at": "2026-09-28T16:03:08+00:00"
+      },
+      "note": "Queue topology (producer/consumer counts) was refreshed with Wrangler 4.141.0 at 2026-09-30T21:39:17+08:00. Backlog metrics remain from 2026-09-28T16:03:08+00:00 and were not rechecked in this refresh; metrics are point-in-time best-effort values. No message bodies were read. Recheck backlog immediately before enabling a consumer."
+    },
+    "d1": {
+      "name": "jarvis-control",
+      "id": "de6dbcab-cc2b-4d71-9fa1-f6971cdb9df6",
+      "remote_tables": 0,
+      "file_size_bytes": 12288,
+      "remote_migration": "NOT_PERFORMED",
+      "readback_at": "2026-09-30T21:39:17+08:00"
+    },
+    "modal": {
+      "workspace": "liamlam617",
+      "environment": "main",
+      "apps": 0,
+      "secrets": 0,
+      "volumes": 0,
+      "p04_app_or_secret_created": false,
+      "readback_at": "2026-09-30T21:39:17+08:00"
+    }
+  },
+  "platform_constraint": {
+    "status": "VERIFIED_FROM_OFFICIAL_CLOUDFLARE_DOCUMENTATION",
+    "details": "Worker Preview can publish Queue messages but cannot consume them. Preview bindings using the same D1 database ID and Queue name share the existing remote data/resources. The production Worker deployment must register the single Queue consumer.",
+    "sources": [
+      "https://developers.cloudflare.com/workers/previews/resources/",
+      "https://developers.cloudflare.com/workers/previews/configuration/"
+    ]
+  },
+  "remote_changes_performed": [],
+  "blockers": [
+    "P04 remote writes and deployment have not been approved.",
+    "Real Discord deferred/result delivery and live Queue/Modal failure tests cannot run before the approved Preview bindings, D1 migration, Modal deployment and production Queue consumer are active.",
+    "The required production Worker version deployment would serve 100% of production Worker traffic; P04_QUEUE_ONLY=1 preserves the observed Hello World! HTTP response while its Queue handler processes messages. The Discord Interactions Endpoint remains on the P03 Preview URL."
+  ],
+  "approval_scope_requested": [
+    "Apply only the additive 0001_create_p04_job_ledger.sql migration to the existing empty jarvis-control D1 database.",
+    "Bind the existing P03 Preview to that D1 database and the existing jarvis-jobs Queue producer; these are shared remote resources, not isolated test resources.",
+    "P04 Preview writes the bounded user prompt (max 1200 characters) or URL (max 2048 characters) to the existing D1 until delivery or the 15-minute interaction expiry, then clears it. The interaction token is AES-GCM ciphertext; Queue messages and logs omit prompt/URL/token; the Modal runner receives no prompt/URL.",
+    "Create the Modal jarvis-runtime-secrets Secret and deploy jarvis-runtime in workspace liamlam617, environment main, with runner min_containers=0, max_containers=1, timeout=300 seconds, retries=1, no GPU, no Volume and no model/Hermes/Wiki access.",
+    "Set P03 Preview secrets JARVIS_REPLY_ENCRYPTION_KEY and JARVIS_INTERNAL_SECRET plus MODAL_DISPATCH_URL; set production JARVIS_INTERNAL_SECRET and MODAL_DISPATCH_URL for the Queue consumer; create the Modal Secret with the shared HMAC secret and callback URL to the P03 Preview. Keep secret values out of chat, repository and logs.",
+    "Deploy jarvis-ingress at 100% to register one Queue consumer (batch size 1, max concurrency 1, 3 retries, 30-second delay, existing DLQ); P04_QUEUE_ONLY=1 keeps the observed production HTTP response, and the Discord Endpoint remains on the P03 Preview URL.",
+    "After deployment, run controlled live tests for deferred/final Discord response, duplicate event, Queue/Modal retry, D1 job/reply state and expiry; do not enter P05."
+  ]
+}

@@ -19,8 +19,160 @@
     "test_id": "P03-DISCORD-IDENTITY",
     "environment": "Discord Developer Portal in authenticated browser workflow",
     "commit": null,
-    "executed_at": "2026-09-27T10:02:35+00:00",
-    "result": "NOT_RUN",
-    "summary": "User login currently requires hCaptcha. Application, Guild, Channel, and Endpoint readback is pending."
+    "executed_at": "2026-09-27T10:07:49+00:00",
+    "result": "PARTIAL",
+    "summary": "User completed Discord login and selected reuse of Hermes. Developer Portal shows Application ID 1511992826815053844, Public Key 5dee4864e08f34bf6a33677237b2547eeb759cbf9fba25b57e1efecd6b97d601, blank Interactions Endpoint, broad Guild Install default permissions, and three enabled privileged Gateway intents. Target Liam 的伺服器 Guild ID is 1488116208426287247; #jarvis and #inbox are absent. Server Integrations confirms Hermes installed, no commands, command permissions for @everyone/all channels, and broad actual Bot permissions. No Discord write or credential reset occurred."
+  },
+  {
+    "test_id": "P03-DISCORD-REMOTE-CONFIG",
+    "environment": "Guild 1488116208426287247 / Application 1511992826815053844",
+    "commit": null,
+    "executed_at": "2026-09-27T12:52:45+00:00",
+    "result": "PARTIAL",
+    "summary": "User approved P03 scope. Private-use #jarvis 1553710999444529233 and #inbox 1553711115433938945 created. Hermes Bot nickname Jarvis confirmed by official API. Three privileged intents off; Public Bot and User Install off; Guild Install defaults View/Send only. Existing Hermes role only View/Send and command permissions narrowed to named user and two channels in UI. Inherited @everyone channel access still requires audit. Bot credential saved with Windows DPAPI outside repo; value not recorded."
+  },
+  {
+    "test_id": "P03-CLOUDFLARE-CANDIDATE",
+    "environment": "Cloudflare account 5ec21083745c46f56581948fe5767c64 / jarvis-ingress",
+    "commit": null,
+    "executed_at": "2026-09-27T12:52:45+00:00",
+    "result": "FAIL",
+    "summary": "Candidate version 0df872db-027a-4f0d-b6c0-84a39d6fd112 was uploaded with a 63-character Discord Public Key (one hex digit omitted), so its version resources did not contain the correct key. This explains Discord's signature rejection. Version URL GET 405; unsigned POST 401. Remote dev with an ephemeral signed PING returned 200/type 1 using a separate test key. Production version 451b02d7-b87c-43da-b71a-e0da224e42ef still receives 100% traffic and returns Hello World."
+  },
+  {
+    "test_id": "P03-GUILD-COMMANDS",
+    "environment": "Discord official Guild Commands API / target Guild",
+    "commit": null,
+    "executed_at": "2026-09-27T12:52:45+00:00",
+    "result": "PARTIAL",
+    "summary": "Only /jarvis, /capture, /status were created after a read-only diff; API readback matched desired commands and preserved unrelated commands. Discord UI showed the three commands. Endpoint verification later passed, but live command invocation is blocked pending Discord client reauthentication."
+  },
+  {
+    "test_id": "P03-ENDPOINT-VERIFICATION",
+    "environment": "Discord Developer Portal / Cloudflare candidate Version URLs",
+    "commit": null,
+    "executed_at": "2026-09-27T12:52:45+00:00",
+    "result": "FAIL",
+    "summary": "Initial attempts to save aliased, unique Version, and p03 Preview URLs failed. Preview Observability confirmed two Portal POSTs at 2026-09-28 12:55:22 UTC; both logged p03_signature_invalid. The cause was one omitted hex digit in the local 63-character public key. Deployment 8aeb8661-805b-45a7-9337-ca0d4e0c529d fixed the key; the subsequent endpoint verification passed and is recorded separately below. Production traffic was not switched."
+  },
+  {
+    "test_id": "P03-PREVIEW-PUBLIC-KEY-FIX",
+    "environment": "Cloudflare account 5ec21083745c46f56581948fe5767c64 / jarvis-ingress Preview p03",
+    "commit": null,
+    "executed_at": "2026-09-28T13:01:37.937761+00:00",
+    "result": "PASS",
+    "summary": "Local config was compared to the authenticated Discord Developer Portal Public Key: the prior value was 63 hex characters and differed at index 41; the corrected key is 64 characters. Wrangler Preview deployment #4 8aeb8661-805b-45a7-9337-ca0d4e0c529d read back the corrected Public Key plus the expected Guild, channels, allowlisted user, and P03_DIAGNOSTICS. No production traffic changed."
+  },
+  {
+    "test_id": "P03-DISCORD-ENDPOINT-HANDSHAKE",
+    "environment": "Discord Developer Portal / Cloudflare jarvis-ingress Preview p03",
+    "commit": null,
+    "executed_at": "2026-09-28T13:02:03.800+00:00",
+    "result": "PASS",
+    "summary": "Preview Observability recorded a rejected invalid-signature POST at 13:02:03.686Z and an accepted signed PING at 13:02:03.800Z. The Worker returned its PING response; Discord then displayed a green saved confirmation, and the endpoint field read back https://p03-jarvis-ingress.liamlamspace.workers.dev."
+  },
+  {
+    "test_id": "P03-DISCORD-LIVE-COMMANDS",
+    "environment": "Discord client / Guild 1488116208426287247",
+    "commit": null,
+    "executed_at": "2026-09-28T13:09:35+00:00",
+    "result": "BLOCKED_AUTH",
+    "summary": "No slash command was invoked. Discord client redirected to its login screen and asked the saved liam_0617 account to sign in again. Bot credentials were not substituted for a user session."
+  },
+  {
+    "test_id": "P03-BOT-EFFECTIVE-CHANNEL-PERMISSIONS",
+    "environment": "Discord official Bot API read-only audit / Guild 1488116208426287247",
+    "commit": null,
+    "executed_at": "2026-09-28T13:09:35+00:00",
+    "result": "FAIL",
+    "summary": "Bot 1511992826815053844 can view and send in the three unrelated existing channels #一般 text (1488116209625989305), #一般 voice (1488116209625989306), and #通知 (1517923977496887516), as well as the intended #jarvis and #inbox. The public-channel access is inherited from @everyone. The Bot lacks Manage Channels and Manage Roles; no permission change was attempted."
+  },
+  {
+    "test_id": "P03-GUILD-COMMANDS-LIVE-READBACK",
+    "environment": "Discord official Bot API / Application 1511992826815053844 / Guild 1488116208426287247",
+    "commit": "160491aaa9aa40d5f5016234fac26a7a4fc23a8f",
+    "executed_at": "2026-09-28T14:27:09+00:00",
+    "result": "PASS",
+    "summary": "GET /applications/@me confirmed the DPAPI-stored token belongs to Application/Bot 1511992826815053844. Guild Commands readback contains exactly /jarvis (prompt required), /capture (url required), and /status; no unrelated Guild Commands were present or modified. Existing global application commands remain untouched."
+  },
+  {
+    "test_id": "P03-DISCORD-COMMAND-SCOPE-READBACK",
+    "environment": "Discord client / Server Settings > Integrations > Hermes / Guild 1488116208426287247",
+    "commit": null,
+    "executed_at": "2026-09-28T14:47:29+00:00",
+    "result": "PASS",
+    "summary": "UI readback shows @everyone Deny, user liam_0617 Allow, all channels Deny, and only #jarvis and #inbox Allow. The integration lists /jarvis, /capture, and /status along with existing global commands; those unrelated commands were not changed."
+  },
+  {
+    "test_id": "P03-DISCORD-LIVE-COMMANDS",
+    "environment": "Authenticated Discord client / Guild 1488116208426287247 / user liam_0617 (249763790709719040)",
+    "commit": "160491aaa9aa40d5f5016234fac26a7a4fc23a8f",
+    "executed_at": "2026-09-28T14:27:00+00:00",
+    "result": "PASS",
+    "summary": "Real slash-command interactions reached the candidate endpoint and returned ephemeral fixed responses: /status in #jarvis => 入口測試中；Queue、Modal 與 Hermes 尚未接入。; /jarvis with prompt 'P03 fixed-response verification' in #jarvis => 入口測試：Hermes 尚未接入，這是固定回覆。; /capture with https://example.com in #inbox => 入口測試：尚未保存連結。. No Queue, Modal, Hermes, or Wiki action ran. During picker testing a plain-text '/jarvis' was accidentally sent in #jarvis before an app command was selected; it invoked no bot and contained no sensitive data. It remains visible; it was not deleted."
+  },
+  {
+    "test_id": "P03-LOCAL-SIGNATURE-ALLOWLIST-TESTS",
+    "environment": "Local Windows / Node 22.11.0 / worker",
+    "commit": "160491aaa9aa40d5f5016234fac26a7a4fc23a8f",
+    "executed_at": "2026-09-28T14:27:09+00:00",
+    "result": "PASS",
+    "summary": "npm test passed 7/7, including valid signed PING, raw-body signature mismatch rejection, malformed/missing signature rejection, unauthorized Guild/Channel/User rejection, and fixed-response content. No live second-user identity test was performed because no authorized second test account was supplied; no borrowed or synthetic identity was used."
+  },
+  {
+    "test_id": "P03-BOT-EFFECTIVE-CHANNEL-PERMISSIONS-READBACK",
+    "environment": "Discord official Bot API / Guild 1488116208426287247",
+    "commit": null,
+    "executed_at": "2026-09-28T14:50:38+00:00",
+    "result": "PARTIAL",
+    "summary": "Readback confirms Hermes role 1511997834625417240 has only permission bits 3072 (View Channel 1024 + Send Messages 2048). Effective permissions calculated from official role/channel overwrites: #一般 text, voice #一般, #通知 have mask 2248471318348353 with View/Send false; private #jarvis and #inbox have mask 2248473465835073 with View/Send true and other inherited permissions mask 2248473465832001. Their current overwrites deny View to @everyone and allow View to Hermes, leaving other @everyone permissions inherited. The Bot API token lacks Manage Channels/Manage Roles. The authenticated client channel editor repeatedly opened #一般 settings while #jarvis was selected; no target-channel permission changes were made. P03 remains blocked until explicit Hermes overwrites in both allowed channels deny all permissions except View Channel and Send Messages, followed by API readback and live command retest."
+  },
+  {
+    "test_id": "P03-PRODUCTION-TRAFFIC-READBACK",
+    "environment": "Cloudflare account 5ec21083745c46f56581948fe5767c64 / jarvis-ingress",
+    "commit": null,
+    "executed_at": "2026-09-28T14:27:09+00:00",
+    "result": "PASS",
+    "summary": "Wrangler deployments list readback shows production still at 100% on version 451b02d7-b87c-43da-b71a-e0da224e42ef. Candidate Preview remains separate; no production cutover occurred."
+  },
+  {
+    "test_id": "P03-ENDPOINT-READBACK-RETEST",
+    "environment": "Discord Developer Portal / Application 1511992826815053844 / authenticated liam_0617 session",
+    "commit": null,
+    "executed_at": "2026-09-28T15:16:35+00:00",
+    "result": "PASS",
+    "summary": "The General Information page read back the saved Interactions Endpoint as https://p03-jarvis-ingress.liamlamspace.workers.dev. No field was changed."
+  },
+  {
+    "test_id": "P03-BOT-EFFECTIVE-CHANNEL-PERMISSIONS-RETEST",
+    "environment": "Discord official Bot API read-only audit / Guild 1488116208426287247",
+    "commit": null,
+    "executed_at": "2026-09-28T15:16:35+00:00",
+    "result": "PASS",
+    "summary": "Fresh API readback: Hermes role permission bits are 3072 (View Channel + Send Messages). In both #jarvis and #inbox the Hermes overwrite allow mask is 3072, deny mask is 8515703330566225, and the effective mask across all current text-channel permission flags is exactly 3072. Existing unrelated text/voice channels #一般 and #通知 have View/Send false. The pre-existing Guild @everyone permission mask 2248473465835073 was not changed."
+  },
+  {
+    "test_id": "P03-DISCORD-LIVE-COMMANDS-RETEST",
+    "environment": "Authenticated Discord client / Guild 1488116208426287247 / user liam_0617 (249763790709719040)",
+    "commit": null,
+    "executed_at": "2026-09-28T15:16:35+00:00",
+    "result": "PASS",
+    "summary": "After channel permission tightening, /status in #jarvis returned '入口測試中；Queue、Modal 與 Hermes 尚未接入。'; /jarvis with prompt 'P03 least-privilege permissions verification' in #jarvis returned '入口測試：Hermes 尚未接入，這是固定回覆。'; /capture with https://example.com in #inbox returned '入口測試：尚未保存連結。'. All three replies were ephemeral. No Queue, Modal, Hermes, or Wiki action ran."
+  },
+  {
+    "test_id": "P03-LOCAL-AND-WRANGLER-RETEST",
+    "environment": "Local Windows / Node 22.11.0 / worker / Wrangler 4.141.0",
+    "commit": null,
+    "executed_at": "2026-09-28T15:16:35+00:00",
+    "result": "PASS",
+    "summary": "npm test passed 7/7; npm run check passed; npm run dry-run passed and listed expected current Discord bindings without deploying."
+  },
+  {
+    "test_id": "P03-PRODUCTION-TRAFFIC-READBACK-RETEST",
+    "environment": "Cloudflare account 5ec21083745c46f56581948fe5767c64 / existing jarvis-ingress production Worker",
+    "commit": null,
+    "executed_at": "2026-09-28T15:16:35+00:00",
+    "result": "PASS",
+    "summary": "Wrangler deployments list readback confirms production remains 100% on version 451b02d7-b87c-43da-b71a-e0da224e42ef. P03 Preview remains separate."
   }
 ]

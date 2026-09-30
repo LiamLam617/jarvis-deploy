@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { webcrypto } from "node:crypto";
 import test from "node:test";
-import { handleInteraction } from "../src/index.mjs";
+import worker, { handleInteraction } from "../src/index.mjs";
 
 const encoder = new TextEncoder();
 const keys = await webcrypto.subtle.generateKey("Ed25519", true, ["sign", "verify"]);
@@ -75,4 +75,13 @@ test("known commands state that they are fixed entry tests", async () => {
     assert.match(body.data.content, expected);
     assert.deepEqual(body.data.allowed_mentions, { parse: [] });
   }
+});
+
+test("queue-only production flag preserves the observed workers.dev response", async () => {
+  const response = await worker.fetch(new Request("https://worker.example/"), {
+    P04_QUEUE_ONLY: "1",
+    BRIDGE_ENABLED: "1",
+  });
+  assert.equal(response.status, 200);
+  assert.equal(await response.text(), "Hello World!");
 });

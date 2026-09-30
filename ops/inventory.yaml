@@ -1,14 +1,18 @@
 schema_version: 1
 mode: modal_cost_risk_accepted_mvp
-current_phase: P03
-phase_status: BLOCKED_AUTH
-last_verified_at: "2026-09-27T10:02:35+00:00"
+current_phase: P04
+phase_status: BLOCKED_APPROVAL
+last_verified_at: "2026-09-30T21:39:17+08:00"
 
 authorization:
   implementation_requested_at: "2026-09-27T07:29:35.758655+00:00"
-  remote_change_scope: "P02 GitHub LiamLam617: create jarvis-deploy and jarvis-wiki as Private, push prepared local content, verify privacy and commits; no Cloudflare/Discord/Modal write"
+  remote_change_scope: "P03 approved: target Discord Guild private-use #jarvis/#inbox, Hermes Bot nickname Jarvis, reduced intents/permissions/command scope; Cloudflare jarvis-ingress candidate version without production cutover; Discord candidate Interactions Endpoint and only /jarvis /capture /status Guild Commands"
   approved_by: "user in chat"
   approved_at: "2026-09-27T09:56:22+00:00"
+  p03_approved_by: "user in chat"
+  p03_approved_at: "2026-09-27 (chat approval; exact time not captured)"
+  p04_approval_status: "PENDING: local contract, implementation and checks ready; exact remote deployment scope recorded in ops/evidence/p04.json"
+  chatgpt_web_computer_use: "User permits ChatGPT Web to use the computer-use skill for this work; this does not approve P04 remote writes or deployment"
   production_cutover_approved_at: null
   modal_cost_risk_accepted_at: "2026-09-27T08:01:57+00:00"
 
@@ -16,14 +20,35 @@ discord:
   server_name: "Liam 的伺服器"
   bot_name: "Jarvis"
   allowed_user_id: "249763790709719040"
-  application_id: null
-  public_key: null
-  guild_id: null
+  application_id: "1511992826815053844"
+  public_key: "5dee4864e08f34bf6a33677237b2547eeb759cbf9fba25b57e1efecd6b97d601"
+  guild_id: "1488116208426287247"
+  bot_role_id: "1511997834625417240"
   channel_ids:
-    jarvis: null
-    inbox: null
-  interactions_endpoint: null
-  commands_verified_at: null
+    jarvis: "1553710999444529233"
+    inbox: "1553711115433938945"
+  interactions_endpoint: "https://p03-jarvis-ingress.liamlamspace.workers.dev"
+  candidate_endpoint_url: "https://p03-jarvis-ingress.liamlamspace.workers.dev"
+  candidate_endpoint_validation: "PASS: Discord accepted the signed PING and saved/read back the P03 Preview endpoint; all three real slash commands returned their expected fixed responses"
+  bot_nickname_verified_at: "2026-09-27T12:48:00+00:00"
+  bot_token_reference: "%LOCALAPPDATA%\\Jarvis\\discord-bot-token.xml (Windows DPAPI; value never stored here)"
+  commands_verified_at: "2026-09-28T14:27:09+00:00 (official Guild Commands API readback: exactly /jarvis, /capture, /status)"
+  command_scope_audit:
+    status: "PASS: @everyone denied; liam_0617 allowed; all channels denied; only #jarvis and #inbox allowed"
+    verified_at: "2026-09-28T14:47:29+00:00"
+  live_command_verification: "PASS (retest 2026-09-28T15:16:35+00:00): /status and /jarvis fixed replies in #jarvis; /capture returned '入口測試：尚未保存連結。' for https://example.com in #inbox; all replies were ephemeral"
+  live_second_identity_test: "NOT_RUN: no authorized second test identity supplied; local Guild/Channel/User allowlist rejection tests passed"
+  effective_access_audit:
+    status: "PASS: Hermes role overwrite in #jarvis/#inbox allows exactly View Channel and Send Messages and denies all other current text-channel flags; effective target text permission mask is exactly 3072. Non-target text/voice channels deny view/send. Existing @everyone guild permissions were not changed."
+    verified_at: "2026-09-28T15:16:35+00:00"
+    hermes_role_permissions: "3072 (View Channel 1024 + Send Messages 2048)"
+    everyone_role_permissions: "2248473465835073"
+    target_channel_effective_permissions: "3072 for current Discord text-channel permission flags in both #jarvis and #inbox; Hermes overwrite allow=3072, deny=8515703330566225"
+    extra_channel_ids:
+      - "1488116209625989305"
+      - "1488116209625989306"
+      - "1517923977496887516"
+  production_traffic_verified_at: "2026-09-28T15:16:35+00:00 (Wrangler readback: production version 451b02d7-b87c-43da-b71a-e0da224e42ef at 100%)"
 
 github:
   owner: LiamLam617
@@ -41,6 +66,12 @@ cloudflare:
   observed_plan: Workers Free
   worker_name: jarvis-ingress
   worker_url: "https://jarvis-ingress.liamlamspace.workers.dev/"
+  candidate_version_id: "8aeb8661-805b-45a7-9337-ca0d4e0c529d"
+  candidate_alias_url: "https://jarvis-p03-jarvis-ingress.liamlamspace.workers.dev/"
+  candidate_preview_url: "https://p03-jarvis-ingress.liamlamspace.workers.dev"
+  candidate_preview_deployment_id: "8aeb8661-805b-45a7-9337-ca0d4e0c529d"
+  production_version_id: "451b02d7-b87c-43da-b71a-e0da224e42ef"
+  production_traffic_percent: 100
   queue_name: jarvis-jobs
   queue_id: "8c868ae58295403287b3a1fcf3de59f2"
   dead_letter_queue_name: jarvis-dead-letter
@@ -99,12 +130,12 @@ hermes:
   compatibility_verified_at: null
 
 bridge:
-  payload_schema_version: null
-  session_mapping_design: null
-  reply_credential_storage_design: null
-  job_claim_and_retry_design: null
-  terminal_state_report_design: null
-  reconciliation_procedure: null
+  payload_schema_version: 1
+  session_mapping_design: "guild_id:channel_id:user_id; Discord snowflakes are strings; jarvis and inbox remain separate sessions"
+  reply_credential_storage_design: "Discord interaction token AES-256-GCM ciphertext in D1; 96-bit random nonce and identity/expiry AAD; key held as Worker secret; clear on delivery or expiry"
+  job_claim_and_retry_design: "Discord interaction ID is the idempotency key and D1 outbox key; Queue body contains only schema_version/kind/event_id; bounded D1 leases; Queue max retries 3 with 30-second delay; Modal runner min 0/max 1, timeout 300 seconds, retries 1"
+  terminal_state_report_design: "HMAC-protected Modal callbacks to Worker /internal/claim, /internal/complete and /internal/fail; successful result edits the same ephemeral original response"
+  reconciliation_procedure: "/status reads D1 and re-sends the stable event_id to Queue only for recoverable outbox rows; D1 claim lease prevents a competing run ID from claiming an active job"
 
 # Only references to approved storage locations; never token values.
 secret_references:
@@ -160,6 +191,14 @@ observations:
   modal_existing_apps: 0
   modal_existing_volumes: 0
   modal_existing_secrets: 0
+  p04_live_inventory_at: "2026-09-30T21:39:17+08:00"
+  p04_queue_backlog_readback: "Backlog metrics last read at 2026-09-28T16:03:08+00:00: both queues were 0 messages/0 bytes (point-in-time best-effort); not rechecked 2026-09-30. No message bodies read. Refresh immediately before enabling a consumer."
+  p04_remote_d1_readback: "2026-09-30T21:39:17+08:00 Wrangler 4.141.0 readback: jarvis-control de6dbcab-cc2b-4d71-9fa1-f6971cdb9df6 remains production with 0 tables and 12288 bytes; remote migration not run"
+  p04_cloudflare_readback: "2026-09-30T21:39:17+08:00 Wrangler 4.141.0, authenticated Cloudflare account 5ec21083745c46f56581948fe5767c64: jarvis-jobs 8c868ae58295403287b3a1fcf3de59f2 and jarvis-dead-letter 93c4b566e0ad40be964f1e5db8cbf805 each have 0 producers/consumers; production Worker 451b02d7-b87c-43da-b71a-e0da224e42ef remains at 100%; P04 changes not deployed"
+  p04_modal_readback: "2026-09-30T21:39:17+08:00 Modal CLI 1.5.5, workspace liamlam617, active environment main; 0 Apps, 0 Secrets, 0 Volumes; P04 resources not created"
+  p04_local_verification: "19/19 Node tests PASS; Worker syntax check and Wrangler dry-run PASS; local-only D1 migration PASS with 1 table, 3 indexes and 0 rows; 3/3 Python tests and py_compile PASS; git diff --check PASS"
+  p04_remote_change_status: "NOT_PERFORMED; waiting for explicit P04 approval"
+  p04_preview_constraint: "Cloudflare Preview can produce Queue messages but cannot consume; Preview D1/Queue bindings using existing IDs share remote data; production Worker deployment required for the Queue consumer"
   modal_cli_proxy_support: "modal[api-proxy-support]==1.5.5; python-socks==3.1.1; aiohttp_socks==0.12.0"
   cloudflare_dashboard_auth: VERIFIED_IN_IAB
   cloudflare_dashboard_plan: "Workers Free active; verified on account subscriptions page"
@@ -171,7 +210,9 @@ observations:
   wiki_repo_remote_commit: "47a92d101470d197fa1fea06ac2a1a905d71bae7"
   deploy_repo_p02_final_remote_commit: "e3c60c8e26b7e144f711077ab3d780071820e505"
   worker_live_get: "HTTP 200 Hello World! from existing dashboard template; candidate Worker not deployed"
-  discord_developer_portal_auth: "Login in progress; hCaptcha requires user completion"
+  discord_developer_portal_auth: "VERIFIED_IN_IAB; Hermes application selected by user for Jarvis"
+  discord_application_baseline: "Hermes installed in target Guild; Interactions Endpoint blank; Guild Install includes applications.commands and bot with broad default permissions; three privileged Gateway intents enabled; target Guild integration has no commands, @everyone and all channels allowed, and many granted Bot permissions"
+  discord_target_guild: "Liam 的伺服器 1488116208426287247; private #jarvis 1553710999444529233 and #inbox 1553711115433938945 created with Hermes role access"
   p03_local_command_tests: "3 Node tests PASS; command registration is read-only by default and not yet run against Discord API"
   billing_setting_user_instruction: "Skip Modal billing setting change; this does not verify strict-zero spend or authorize deployment"
   modal_cost_risk_user_decision: "Accepted current Modal spend limit USD 20 and possible Volume storage charges; continue deployment preparation"
